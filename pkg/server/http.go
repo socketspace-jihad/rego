@@ -87,7 +87,7 @@ func (h *HTTPRegoConnection) Set(key string, value any) error {
 		return err
 	}
 	buff := bytes.NewBuffer(data)
-	req, err := http.NewRequest("POST", "/handle", buff)
+	req, err := http.NewRequest("POST", "http://localhost:8080/handle", buff)
 	if err != nil {
 		return err
 	}
