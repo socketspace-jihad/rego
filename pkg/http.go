@@ -3,6 +3,7 @@ package pkg
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -75,4 +76,55 @@ func (h *HTTPRegoConnection) Get(key string) (any, error) {
 	return kv.Value, nil
 }
 
-//stop the connection
+func (h *HTTPRegoConnection) Set(key string, value any) error {
+	kv := KeyValue{
+		Key:   key,
+		Value: value,
+	}
+
+	data, err := json.Marshal(kv)
+	if err != nil {
+		return err
+	}
+	buff := bytes.NewBuffer(data)
+	req, err := http.NewRequest("POST", "/handle", buff)
+	if err != nil {
+		return err
+	}
+	res, err := h.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if res.StatusCode != http.StatusCreated {
+		return fmt.Errorf("Error status code: %v", res.StatusCode)
+	}
+
+	return nil
+}
+
+func (h *HTTPRegoConnection) Delete(key string) error {
+	kv := KeyValue{
+		Key: key,
+	}
+
+	data, err := json.Marshal(kv)
+	if err != nil {
+		return err
+	}
+	buff := bytes.NewBuffer(data)
+	req, err := http.NewRequest("DELETE", "/handle", buff)
+	if err != nil {
+		return err
+	}
+	res, err := h.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if res.StatusCode != http.StatusAccepted {
+		return fmt.Errorf("Error status code: %v", res.StatusCode)
+	}
+
+	return nil
+}
