@@ -3,7 +3,8 @@ package http_rego
 import (
 	"encoding/json"
 	"net/http"
-	"rego/internal/core"
+
+	"github.com/socketspace-jihad/rego/internal/core"
 )
 
 //fix the status code on the handler

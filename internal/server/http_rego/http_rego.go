@@ -3,7 +3,8 @@ package http_rego
 import (
 	"log"
 	"net/http"
-	"rego/internal/server"
+
+	"github.com/socketspace-jihad/rego/internal/server"
 )
 
 type KeyValue struct {

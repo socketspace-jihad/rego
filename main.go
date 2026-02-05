@@ -3,8 +3,10 @@ package main
 import (
 	"errors"
 	"os"
-	"rego/internal/server"
-	_ "rego/internal/server/http_rego"
+
+	_ "github.com/socketspace-jihad/rego/internal/server/http_rego"
+
+	"github.com/socketspace-jihad/rego/internal/server"
 )
 
 func main() {
