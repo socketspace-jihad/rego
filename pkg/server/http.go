@@ -91,7 +91,7 @@ func (h *HTTPRegoConnection) Set(key string, value any) error {
 	if err != nil {
 		return err
 	}
-	res, err := h.Client.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}
