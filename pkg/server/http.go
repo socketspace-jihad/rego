@@ -62,7 +62,7 @@ func (h *HTTPRegoConnection) Get(key string) (any, error) {
 		return nil, err
 	}
 	buff := bytes.NewBuffer(data)
-	req, err := http.NewRequest("GET", "/handle", buff)
+	req, err := http.NewRequest("GET", "http://localhost:8080/handle", buff)
 	if err != nil {
 		return nil, err
 	}
