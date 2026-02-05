@@ -66,7 +66,7 @@ func (h *HTTPRegoConnection) Get(key string) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	res, err := h.Client.Do(req)
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
