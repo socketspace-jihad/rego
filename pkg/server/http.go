@@ -52,7 +52,6 @@ type KeyValue struct {
 	Value any
 }
 
-// CRUD operation
 func (h *HTTPRegoConnection) Get(key string) (any, error) {
 	kv := KeyValue{
 		Key: key,
@@ -66,7 +65,7 @@ func (h *HTTPRegoConnection) Get(key string) (any, error) {
 	if err != nil {
 		return nil, err
 	}
-	res, err := http.DefaultClient.Do(req)
+	res, err := h.Client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +90,7 @@ func (h *HTTPRegoConnection) Set(key string, value any) error {
 	if err != nil {
 		return err
 	}
-	res, err := http.DefaultClient.Do(req)
+	res, err := h.Client.Do(req)
 	if err != nil {
 		return err
 	}
