@@ -127,3 +127,30 @@ func (h *HTTPRegoConnection) Delete(key string) error {
 
 	return nil
 }
+
+func (h *HTTPRegoConnection) Upsert(key string, value any) error {
+	kv := KeyValue{
+		Key:   key,
+		Value: value,
+	}
+
+	data, err := json.Marshal(kv)
+	if err != nil {
+		return err
+	}
+	buff := bytes.NewBuffer(data)
+	req, err := http.NewRequest("PUT", "http://localhost:8080/handle", buff)
+	if err != nil {
+		return err
+	}
+	res, err := h.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if res.StatusCode != http.StatusCreated {
+		return fmt.Errorf("Error status code: %v", res.StatusCode)
+	}
+
+	return nil
+}
