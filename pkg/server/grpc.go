@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
@@ -57,6 +58,7 @@ func (g *GRPCRego) Get(key string) (any, error) {
 
 func (g *GRPCRego) Set(key string, value any) error {
 	v, _ := value.(*anypb.Any)
+	fmt.Println(v)
 	val := &proto.Value{
 		Value: v,
 	}
