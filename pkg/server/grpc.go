@@ -2,11 +2,12 @@ package server
 
 import (
 	"context"
-	"fmt"
+	"errors"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	goproto "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 )
 
@@ -57,13 +58,15 @@ func (g *GRPCRego) Get(key string) (any, error) {
 }
 
 func (g *GRPCRego) Set(key string, value any) error {
-	v, _ := value.(*anypb.Any)
-	fmt.Println(v)
-	val := &proto.Value{
-		Value: v,
+	msg, ok := value.(goproto.Message)
+	if !ok {
+		return errors.New("failed to convert to anypb.Any")
 	}
-	anyValue, err := anypb.New(val)
-	_, err = g.grpcConn.Set(context.Background(), &proto.KeyValue{Key: key, Value: anyValue})
+	anyMsg, err := anypb.New(msg)
+	if err != nil {
+		return err
+	}
+	_, err = g.grpcConn.Set(context.Background(), &proto.KeyValue{Key: key, Value: anyMsg})
 	if err != nil {
 		return err
 	}
