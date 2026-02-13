@@ -5,6 +5,7 @@ import (
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/anypb"
 )
 
@@ -33,7 +34,7 @@ func NewGRPCConnection(configs ...GRPCRegoConfig) *GRPCRego {
 }
 
 func (g *GRPCRego) Connect() error {
-	conn, err := grpc.NewClient(g.Host)
+	conn, err := grpc.NewClient(g.Host, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return err
 	}
