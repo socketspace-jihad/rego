@@ -56,8 +56,12 @@ func (g *GRPCRego) Get(key string) (any, error) {
 }
 
 func (g *GRPCRego) Set(key string, value any) error {
-	anyVal, _ := value.(*anypb.Any)
-	_, err := g.grpcConn.Set(context.Background(), &proto.KeyValue{Key: key, Value: anyVal})
+	v, _ := value.(*anypb.Any)
+	val := &proto.Value{
+		Value: v,
+	}
+	anyValue, err := anypb.New(val)
+	_, err = g.grpcConn.Set(context.Background(), &proto.KeyValue{Key: key, Value: anyValue})
 	if err != nil {
 		return err
 	}
