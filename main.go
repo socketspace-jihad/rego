@@ -4,9 +4,9 @@ import (
 	"errors"
 	"os"
 
-	_ "github.com/socketspace-jihad/rego/internal/server/http_rego"
-
 	"github.com/socketspace-jihad/rego/internal/server"
+	_ "github.com/socketspace-jihad/rego/internal/server/grpc_rego"
+	_ "github.com/socketspace-jihad/rego/internal/server/http_rego"
 )
 
 func main() {
@@ -21,4 +21,5 @@ func main() {
 	}
 
 	srv.Serve()
+
 }
