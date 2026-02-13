@@ -22,7 +22,7 @@ func WithHostname(host string) GRPCRegoConfig {
 	}
 }
 
-func NewServer(configs ...GRPCRegoConfig) *GRPCRego {
+func NewGRPCConnection(configs ...GRPCRegoConfig) *GRPCRego {
 	grpcConn := &GRPCRego{
 		Host: "localhost:50050",
 	}
