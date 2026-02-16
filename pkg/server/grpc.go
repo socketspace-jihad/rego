@@ -55,12 +55,12 @@ func (g *GRPCRego) GetString(key string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	value := &anypb.Any{}
+	value := &wrapperspb.StringValue{}
 	if err := anypb.UnmarshalTo(val.Value, value, goproto.UnmarshalOptions{}); err != nil {
 		fmt.Println("unmarshal error")
 		return "", err
 	}
-	return string(value.Value), nil
+	return value.Value, nil
 }
 
 func (g *GRPCRego) SetString(key string, value string) error {
