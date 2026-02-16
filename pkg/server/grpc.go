@@ -2,11 +2,11 @@ package server
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	goproto "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
@@ -49,13 +49,16 @@ func (g *GRPCRego) Disconnect() error {
 	return g.conn.Close()
 }
 
-func (g *GRPCRego) Get(key string) (any, error) {
+func (g *GRPCRego) GetString(key string) (string, error) {
 	val, err := g.grpcConn.Get(context.Background(), &proto.Key{Key: key})
-	fmt.Println("GET value from sdk", val)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return val, nil
+	var value wrapperspb.StringValue
+	if err := anypb.UnmarshalTo(val.Value, &value, goproto.UnmarshalOptions{}); err != nil {
+		return "", err
+	}
+	return value.Value, nil
 }
 
 func (g *GRPCRego) SetString(key string, value string) error {
