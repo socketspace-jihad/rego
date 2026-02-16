@@ -2,7 +2,6 @@ package grpc_rego
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
 
@@ -18,15 +17,12 @@ type GRPCRego struct {
 }
 
 func (g *GRPCRego) Set(ctx context.Context, in *proto.KeyValue) (*proto.Status, error) {
-	fmt.Println("SET OPERATION TRIGGERED", in.Key, in.Value)
 	core.Set(in.Key, in.Value)
 	return &proto.Status{}, nil
 }
 
 func (g *GRPCRego) Get(ctx context.Context, in *proto.Key) (*proto.Value, error) {
-	fmt.Println("GET OPERATION TRIGGERED")
 	val, _ := core.Get(in.Key)
-	fmt.Println(val)
 	anyVal, _ := val.(*anypb.Any)
 	return &proto.Value{
 		Value: anyVal,

@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
@@ -50,6 +51,7 @@ func (g *GRPCRego) Disconnect() error {
 
 func (g *GRPCRego) Get(key string) (any, error) {
 	val, err := g.grpcConn.Get(context.Background(), &proto.Key{Key: key})
+	fmt.Println("GET value from sdk", val)
 	if err != nil {
 		return nil, err
 	}
