@@ -55,8 +55,8 @@ func (g *GRPCRego) GetString(key string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	var value wrapperspb.StringValue
-	if err := anypb.UnmarshalTo(val.Value, &value, goproto.UnmarshalOptions{}); err != nil {
+	value := &wrapperspb.StringValue{}
+	if err := anypb.UnmarshalTo(val.Value, value, goproto.UnmarshalOptions{}); err != nil {
 		fmt.Println("unmarshal error")
 		return "", err
 	}
