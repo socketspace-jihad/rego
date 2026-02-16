@@ -54,7 +54,7 @@ func (g *GRPCRego) GetString(key string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if val == nil {
+	if val.Value == nil {
 		return "", errors.New("key doesn't exists")
 	}
 	value := &wrapperspb.StringValue{}
