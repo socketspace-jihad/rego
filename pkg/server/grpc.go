@@ -2,13 +2,12 @@ package server
 
 import (
 	"context"
-	"errors"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	goproto "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 type GRPCRego struct {
@@ -57,12 +56,11 @@ func (g *GRPCRego) Get(key string) (any, error) {
 	return val, nil
 }
 
-func (g *GRPCRego) Set(key string, value any) error {
-	msg, ok := value.(goproto.Message)
-	if !ok {
-		return errors.New("failed to convert to anypb.Any")
+func (g *GRPCRego) SetString(key string, value string) error {
+	stringValue := &wrapperspb.StringValue{
+		Value: value,
 	}
-	anyMsg, err := anypb.New(msg)
+	anyMsg, err := anypb.New(stringValue)
 	if err != nil {
 		return err
 	}
