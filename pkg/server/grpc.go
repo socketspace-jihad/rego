@@ -2,12 +2,10 @@ package server
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/socketspace-jihad/rego/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	goproto "google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
@@ -56,8 +54,7 @@ func (g *GRPCRego) GetString(key string) (string, error) {
 		return "", err
 	}
 	value := &wrapperspb.StringValue{}
-	if err := anypb.UnmarshalTo(val.Value, value, goproto.UnmarshalOptions{}); err != nil {
-		fmt.Println("unmarshal error")
+	if err := val.Value.UnmarshalTo(value); err != nil {
 		return "", err
 	}
 	return value.Value, nil
