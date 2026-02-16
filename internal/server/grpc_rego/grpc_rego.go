@@ -2,6 +2,7 @@ package grpc_rego
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
@@ -18,6 +19,8 @@ type GRPCRego struct {
 
 func (g *GRPCRego) Set(ctx context.Context, in *proto.KeyValue) (*proto.Status, error) {
 	core.Set(in.Key, in.Value)
+	fmt.Println("set key", in.Key)
+	fmt.Println("set value", in.Value)
 	return &proto.Status{}, nil
 }
 
