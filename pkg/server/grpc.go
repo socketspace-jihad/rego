@@ -11,6 +11,10 @@ import (
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
+var (
+	KeyDoesntExists = errors.New("key doesn't exists")
+)
+
 type GRPCRego struct {
 	Host     string
 	conn     *grpc.ClientConn
@@ -55,7 +59,7 @@ func (g *GRPCRego) GetString(key string) (string, error) {
 		return "", err
 	}
 	if val.Value == nil {
-		return "", errors.New("key doesn't exists")
+		return "", KeyDoesntExists
 	}
 	value := &wrapperspb.StringValue{}
 	if err := val.Value.UnmarshalTo(value); err != nil {
@@ -85,7 +89,7 @@ func (g *GRPCRego) GetBool(key string) (bool, error) {
 		return false, err
 	}
 	if val.Value == nil {
-		return false, errors.New("key doesn't exists")
+		return false, KeyDoesntExists
 	}
 	value := &wrapperspb.BoolValue{}
 	if err := val.Value.UnmarshalTo(value); err != nil {
@@ -115,7 +119,7 @@ func (g *GRPCRego) GetInt(key string) (int64, error) {
 		return 0, err
 	}
 	if val.Value == nil {
-		return 0, errors.New("key doesn't exists")
+		return 0, KeyDoesntExists
 	}
 	value := &wrapperspb.Int64Value{}
 	if err := val.Value.UnmarshalTo(value); err != nil {
@@ -145,7 +149,7 @@ func (g *GRPCRego) GetFloat(key string) (float32, error) {
 		return 0, err
 	}
 	if val.Value == nil {
-		return 0, errors.New("key doesn't exists")
+		return 0, KeyDoesntExists
 	}
 	value := &wrapperspb.FloatValue{}
 	if err := val.Value.UnmarshalTo(value); err != nil {
