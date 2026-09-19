@@ -1,0 +1,23 @@
+name: "Go Build & Test"
+
+on:
+  push:
+    branches: ["main"]
+
+stages:
+  - name: lint
+    steps:
+      - name: Go vet
+        run: go vet ./...
+
+  - name: test
+    depends_on: [lint]
+    steps:
+      - name: Run tests
+        run: go test -v ./...
+
+  - name: build
+    depends_on: [test]
+    steps:
+      - name: Build binary
+        run: go build -o bin/app .
