@@ -10,6 +10,9 @@ stages:
       - name: Go vet
         image: golang:1.27.1
         run: go vet ./...
+      - name: echo test
+        run: echo 'test'
+        parallel: true
 
   - name: test
     depends_on: [lint]
