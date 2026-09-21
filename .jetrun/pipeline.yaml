@@ -8,16 +8,19 @@ stages:
   - name: lint
     steps:
       - name: Go vet
+        image: golang:1.27.1
         run: go vet ./...
 
   - name: test
     depends_on: [lint]
     steps:
       - name: Run tests
+        image: golang:1.27.1
         run: go test -v ./...
 
   - name: build
     depends_on: [test]
     steps:
       - name: Build binary
+        image: golang:1.27.1
         run: go build -o bin/app .
