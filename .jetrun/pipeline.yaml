@@ -24,3 +24,7 @@ stages:
     steps:
       - name: Build binary
         run: go build -o bin/app .
+    artifacts:
+        name: binary
+        paths:
+          - app
