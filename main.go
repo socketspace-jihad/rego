@@ -12,7 +12,7 @@ import (
 func main() {
 	PROTOCOL := os.Getenv("REGO_PROTOCOL")
 	if PROTOCOL == "" {
-		panic(errors.New("you need to define REGO_PROTOCOL in your environment"))
+		panic(errors.New("you need to define REGO_PROTOCOL_V2 in your environment"))
 	}
 
 	srv, err := server.GetServer(PROTOCOL)
