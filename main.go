@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"log"
 	"os"
 
 	"github.com/socketspace-jihad/rego/internal/server"
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+	log.Println("v1 running")
 	PROTOCOL := os.Getenv("REGO_PROTOCOL")
 	if PROTOCOL == "" {
 		panic(errors.New("you need to define REGO_PROTOCOL_V2 in your environment"))
