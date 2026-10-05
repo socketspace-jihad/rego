@@ -27,4 +27,5 @@ stages:
     artifacts:
         name: binary
         paths:
-          - app
+          - bin/app
+
